@@ -16,20 +16,7 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
     </flow>
 
     <flow name="getFlightsProcess">
-        <set-session-variable variableName="destination" value="#[message.inboundProperties.'http.query.params'.destination]" doc:name="Session Variable"/>
-        <choice doc:name="Choice">
-            <when expression="#[sessionVars.destination != empty]">
-                <http:request config-ref="HTTP_Request_Configuration" path="process/getFlightsBy" method="GET" doc:name="HTTP_Reqest_byDestination">
-                    <http:request-builder>
-                        <http:query-param paramName="destination" value="#[sessionVars.destination]"/>
-                    </http:request-builder>
-                </http:request>
-                <logger level="INFO" doc:name="Logger"/>
-            </when>
-            <otherwise>
-                <http:request config-ref="HTTP_Request_Configuration" path="process/getFlights" method="GET" doc:name="HTTP_Both_Flights"/>
-            </otherwise>
-        </choice>
+        <http:request config-ref="HTTP_Request_Configuration" path="process/getFlights" method="GET" doc:name="HTTP_Both_Flights"/>
         <logger level="INFO" doc:name="Logger"/>
 
     </flow>

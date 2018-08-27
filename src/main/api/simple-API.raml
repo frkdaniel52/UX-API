@@ -1,9 +1,7 @@
 #%RAML 1.0
 title: complete-api
-
 types:
   flight: !include datatypes/Flight.raml
-
 /getFlights:
   get:
     queryParameters:
@@ -23,8 +21,7 @@ types:
               { 
                 "success": true, 
                 "message": "Succesful" 
-               }
-              
+               }         
       400:
         body:
           application/json:
@@ -49,5 +46,38 @@ types:
                 "success": false,
                 "message": "Server error"
               }
-              
-          
+/getAllFlights:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:  |
+              { 
+                "success": true, 
+                "message": "Succesful" 
+               }
+      400:
+        body:
+          application/json:
+            example:  |
+              { 
+                "success": false, 
+                "message": "Bad request - The server cannot process the request due to a client error" 
+              }
+      404:
+        body:
+          application/json:
+             example: |
+              {
+                "success": false,
+                "message": "Not found"
+              }
+      500:
+        body:
+          application/json:
+             example: |
+              {
+                "success": false,
+                "message": "Server error"
+              }                                 

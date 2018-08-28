@@ -7,7 +7,7 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
 http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
 
     <apikit:config name="simple-API-config" raml="simple-API.raml" consoleEnabled="false" doc:name="Router" keepRamlBaseUri="false">
-        <apikit:flow-mapping resource="/getFlights" action="get" flow-ref="getFlightsProcess"/>
+        <apikit:flow-mapping resource="/getAllFlights" action="get" flow-ref="getFlightsProcess"/>
     </apikit:config>
     <flow name="simple-API-main">
         <http:listener config-ref="HTTP_Listener_Configuration" path="/experience/*" doc:name="HTTP" allowedMethods="GET"/>

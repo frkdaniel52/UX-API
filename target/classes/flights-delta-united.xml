@@ -6,8 +6,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
 http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
 
-    <apikit:config name="simple-API-config" raml="simple-API.raml" consoleEnabled="false" doc:name="Router" keepRamlBaseUri="false">
-        <apikit:flow-mapping resource="/getAllFlights" action="get" flow-ref="getFlightsProcess"/>
+    <apikit:config name="simple-API-config" raml="ux-api.raml" consoleEnabled="true" doc:name="Router" keepRamlBaseUri="false">
+        <apikit:flow-mapping resource="/flights/delta-united" action="get" flow-ref="get:/flights/delta-united"/>
     </apikit:config>
     <flow name="simple-API-main">
         <http:listener config-ref="HTTP_Listener_Configuration" path="/experience/*" doc:name="HTTP" allowedMethods="GET"/>
@@ -15,9 +15,9 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
         <exception-strategy ref="simple-API-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
     </flow>
 
-    <flow name="getFlightsProcess">
-        <http:request config-ref="HTTP_Request_Configuration" path="process/getFlights" method="GET" doc:name="HTTP_Both_Flights"/>
-        <logger level="INFO" doc:name="Logger"/>
+    <flow name="get:/flights/delta-united">
+        <http:request config-ref="HTTP_Request_Configuration" path="process/flights/delta-united" method="GET" doc:name="HTTP"/>
+        <logger level="INFO" doc:name="Logger" message="FLOWNAME: #[flow.name]  FECHA &amp; HORA   #[server.dateTime.format('yyyy-MM-dd HH:mm:ss')]  "/>
 
     </flow>
     <apikit:mapping-exception-strategy name="simple-API-apiKitGlobalExceptionMapping">
@@ -47,5 +47,6 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
             <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
             <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload"/>
         </apikit:mapping>
+
     </apikit:mapping-exception-strategy>
 </mule>
